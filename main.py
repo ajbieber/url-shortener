@@ -15,6 +15,9 @@ db = client['urlshortener']
 # Get the collection or create if does not exist
 urls = db['url']
 
+# Index the shortened field, _id is already indexed
+urls.create_index('shortened')
+
 
 ########################################################
 #                                                      #
