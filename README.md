@@ -11,10 +11,11 @@ spent creating thie README and cleaning up code.
 
 ## Recommended Use
 
-As stated above, whle a UI does exist, it is incomplete. It is recommended for full functionality to
+As stated above, while a UI does exist, it is incomplete. It is recommended for full functionality to
 use the RESTful API. To shorten a url, make a POST request to `http://localhost:5000/api/url`,
 cointaining a single form field `url`. I found it easiest to use 
-[Postman](https://www.postman.com/downloads/) for this. To retrieve an original url, make a GET
+[Postman](https://www.postman.com/downloads/) for this. *Please note, this API does expect form data
+and not JSON. This is an improvement I would like to make.* To retrieve an original url, make a GET
 request to `http://localhost:5000/api/url`, followed by a query parameter `short`, with the value
 being the shortened url.
 
@@ -23,7 +24,7 @@ being the shortened url.
 Before running the application, you will need to ensure you have a running instance of MongoDB,
 listening on the default port of 27017. My personal preference was to run Mongo via Docker,
 following the instructions found [here](https://hub.docker.com/_/mongo). To start my instance
-locally, I ran the command
+locally, I ran the command:
 
 ```bash
     docker run --name mongo -p 27017:27017 -d mongo:latest
@@ -49,7 +50,8 @@ entries will always be roughly the same size. For this reason, it makes sense to
 database.
 
 Finally, the last big improvement would be the algorithm for shortening urls. Due to time
-constraints, I chose to implements an algortim that converted a random number into a base_62 string,
+constraints, I chose to implement an algorithm that converted a random number into a base_62 string,
 where base_62 contains all numbers, lowercase and uppercase letters. For a lesser used tool, this
 option is fine. But as more and more urls are used up, the random number generator may have
-collisions, and will take longer and longer to generate a unique random number. 
+collisions, and will take longer and longer to generate a unique random number. Additionally,
+there would be a maximum of 9223372036854775807 urls, the value of `sys.maxsize`.
